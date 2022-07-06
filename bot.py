@@ -63,9 +63,9 @@ async def link_handler(client, message):
         url = get_url.format(id)
         res = requests.get(url)
         if res.status_code == 200:
-            res = ''.join(random.choices(string.ascii_uppercase +
+            req = ''.join(random.choices(string.ascii_uppercase +
                              string.digits, k = 6))
-            file_name = f"{res}.mp4"
+            file_name = f"{req}.mp4"
             filename = res.json()["filename"]
             duration = res.json()["duration"]
             height = res.json()["height"]
@@ -79,7 +79,7 @@ async def link_handler(client, message):
                 start_time = time.time()
                 os.system(f"ffmpeg -i {source} -c copy {file_name}")
                 end_time = time.time()
-                await message.reply(f"**Filename** : `{filename}`\n**Reslution** : `{reslution}`\n**Duration** : `{convert(duration)}`\n**Status** : `Downloaded To Server`")
+                await message.reply(f"**Filename** : `{filename}`\n**Reslution** : `{reslution}`\n**Duration** : `{convert(duration)}`\n**Time Taken**: `{round(end_time-start_time)} Seconds`\n**Status** : `Downloaded To Server`")
 
             else:
                 await message.reply(f"**Filename** : `{filename}`\n**Reslution** : `{reslution}`\n**Duration** : `{convert(duration)}`\n**Size** : `{convert_size(size)}`\n**Status** :`❌ Failed Video Size > 2GB`")
