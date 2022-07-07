@@ -4,6 +4,8 @@ import math
 import string
 import random
 import requests
+import ffmpeg_streaming
+from ffmpeg_streaming import Formats
 from pyrogram import filters, Client
 from pyrogram.types.messages_and_media import message
 from pyrogram.types import *
@@ -77,7 +79,9 @@ async def link_handler(client, message):
             if ".mpd" in source:
                 await message.reply(f"**Filename** : `{filename}`\n**Reslution** : `{reslution}`\n**Duration** : `{convert(duration)}`\n**Status** : `⏬ Downloading To Server`")
                 start_time = time.time()
-                os.system(f"ffmpeg -i {source} -c copy {file_name}")
+                video = ffmpeg_streaming.input(source)
+                stream = video.stream2file(Formats.h264())
+                stream.output(file_name)
                 end_time = time.time()
                 await message.reply(f"**Filename** : `{filename}`\n**Reslution** : `{reslution}`\n**Duration** : `{convert(duration)}`\n**Time Taken**: `{round(end_time-start_time)} Seconds`\n**Status** : `Downloaded To Server`")
 
