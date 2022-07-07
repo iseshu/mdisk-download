@@ -1,3 +1,4 @@
 requests
 pyrogram
 Tgcrypto
+python-ffmpeg-video-streaming
